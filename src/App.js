@@ -1,21 +1,68 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
+import { connect } from 'react-redux';
+import { Navbar, Nav, NavItem } from 'react-bootstrap';
+import PropTypes from 'prop-types';
+
 import './App.css';
 
+const mapStateToProps = state => ({
+  redirectTo: state.common.redirectTo,
+  loggedIn: state.common.token,
+});
+
+const mapDispatchToProps = dispatch => ({
+  onLoad: () => dispatch({ type: 'LOAD' }),
+  onRedirect: () => dispatch({ type: 'REDIRECT' }),
+  doLogout: () => dispatch({ type: 'LOGOUT' }),
+});
+
 class App extends Component {
+
+  componentWillMount() {
+    this.props.onLoad();
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.redirectTo) {
+      this.context.router.replace(nextProps.redirectTo)
+      this.props.onRedirect()
+    }
+  }
+
   render() {
     return (
       <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <h1 className="App-title">Welcome to React</h1>
+        <header>
+          <Navbar>
+            <Navbar.Header>
+              <Navbar.Brand>
+                <a href="#/">Editable Profile</a>
+              </Navbar.Brand>
+            </Navbar.Header>
+            {this.props.loggedIn ? (
+              <Nav>
+                <NavItem eventKey={1} href="#/profile">Edit profile</NavItem>
+                <NavItem eventKey={2} onClick={this.props.doLogout}>Log out</NavItem>
+              </Nav>
+            ) : (
+                <Nav>
+                  <NavItem eventKey={1} href="#/signin">Sign in</NavItem>
+                  <NavItem eventKey={2} href="#/signup">Sign up</NavItem>
+                </Nav>
+              )}
+          </Navbar>
         </header>
-        <p className="App-intro">
-          To get started, edit <code>src/App.js</code> and save to reload.
-        </p>
+        <div className="container" style={{ maxWidth: '600px' }}>
+          {this.props.children}
+        </div>
+        <footer></footer>
       </div>
     );
   }
 }
 
-export default App;
+App.contextTypes = {
+  router: PropTypes.object.isRequired
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(App);
