@@ -11,6 +11,7 @@ import store from './store';
 
 import HomePage from './components/HomePage';
 import SignInPage from './components/SignInPage';
+import SignUpPage from './components/SignUpPage';
 
 ReactDOM.render(
     <Provider store={store}>
@@ -18,6 +19,7 @@ ReactDOM.render(
             <Route path="/" component={App}>
                 <IndexRoute component={HomePage} />
                 <Route path="signin" component={SignInPage} />
+                <Route path="signup" component={SignUpPage} />
             </Route>
         </Router>
     </Provider>,
