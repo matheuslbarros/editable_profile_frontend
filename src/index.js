@@ -9,10 +9,13 @@ import { Router, Route, IndexRoute, hashHistory } from 'react-router';
 
 import store from './store';
 
+import HomePage from './components/HomePage';
+
 ReactDOM.render(
     <Provider store={store}>
         <Router history={hashHistory}>
             <Route path="/" component={App}>
+                <IndexRoute component={HomePage} />
             </Route>
         </Router>
     </Provider>,
