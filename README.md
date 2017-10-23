@@ -1,6 +1,11 @@
 ## Editable Profile
 
+### How to run
+* Configure the serverUrl on ```config.js```
+* Run the command: npm install
+* Run the command: npm start
 
+### Summary
 This exercise requires a little bit of front end and back end.
 Please provide some code which allows you to edit your profile (both client and server), based on the attributes below.
 If you're stronger on the backend, that's fine to concentrate on that more - just let us know in the notes you've done so (and likewise for the front end).
