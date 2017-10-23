@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { Alert } from 'react-bootstrap';
+import { toast } from 'react-toastify';
 
 import ProfileForm from './ProfileForm';
 import { auth as authApi } from '../api';
@@ -30,6 +31,7 @@ class SignUpPage extends React.Component {
         authApi
             .signUp(profile)
             .then((profile) => {
+                toast("Profile registered with success");
                 this.setState({ profile })
                 this.props.redirectTo('/signin');
             })

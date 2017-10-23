@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { Alert } from 'react-bootstrap';
+import { toast } from 'react-toastify';
 
 import ProfileForm from './ProfileForm';
 import { profile as profileApi } from '../api';
@@ -36,6 +37,7 @@ class ProfileEditPage extends React.Component {
         profileApi
             .update(profile)
             .then((profile) => {
+                toast("Profile updated with success");
                 this.setState({ profile })
                 this.props.redirectTo('/');
             })

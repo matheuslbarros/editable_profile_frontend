@@ -27,3 +27,11 @@
 .container > div > h1 {
   text-align: center;
 }
+
+.toastify__body {
+  color: black;
+}
+ 
+.toastify__progress {
+  background: none;
+}

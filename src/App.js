@@ -2,7 +2,9 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Navbar, Nav, NavItem } from 'react-bootstrap';
 import PropTypes from 'prop-types';
+import { ToastContainer } from 'react-toastify';
 
+import 'react-toastify/dist/ReactToastify.min.css';
 import './App.css';
 
 const mapStateToProps = state => ({
@@ -56,6 +58,15 @@ class App extends Component {
           {this.props.children}
         </div>
         <footer></footer>
+        <ToastContainer 
+          position="bottom-center"
+          type="default"
+          autoClose={5000}
+          hideProgressBar={false}
+          newestOnTop={false}
+          closeOnClick
+          pauseOnHover
+        />
       </div>
     );
   }
