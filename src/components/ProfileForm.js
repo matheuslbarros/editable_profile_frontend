@@ -18,7 +18,14 @@ class ProfileForm extends React.Component {
       religion: [],
       figure: [],
       marital_status: [],
-      profile: {},
+      profile: {
+        displayName: '',
+        realName: '',
+        birthday: '',
+        height: '',
+        occupation: '',
+        aboutMe: '',
+      },
     };
 
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -33,41 +40,20 @@ class ProfileForm extends React.Component {
   }
 
   handleLocation(selected) {
-    var name = 'location';
-    var value = selected[0];
-
-    this.props.profile[name] = value;
-
-    this.setState({
-      profile: {
-        ...this.state.profile,
-        [name]: value
-      }
-    })
+    this.changeProfileAttribute('location', selected[0]);
   }
 
   handleInputChange(event) {
     const target = event.target;
-    const name = target.id;
-    const value = target.value;
-
-    this.props.profile[name] = value;
-
-    this.setState({
-      profile: {
-        ...this.state.profile,
-        [name]: value,
-      }
-    });
+    this.changeProfileAttribute(target.id, target.value);
   }
 
   handleInputFileChange(event) {
     const target = event.target;
-    const name = target.id;
-    const value = target.files[0];
+    this.changeProfileAttribute(target.id, target.files[0]);
+  }
 
-    this.props.profile[name] = value;
-
+  changeProfileAttribute(name, value) {
     this.setState({
       profile: {
         ...this.state.profile,
@@ -76,7 +62,11 @@ class ProfileForm extends React.Component {
     });
   }
 
-  componentDidMount() {
+  componentWillReceiveProps(nextProps) {
+    this.setState({ profile: nextProps.profile });
+  }
+
+  componentWillMount() {
     citiesApi.findAll().then((cities) => this.setState({ cities }));
     singleChoiceAttributesApi.findAll().then((data) => this.setState({
       gender: data.gender,
@@ -88,15 +78,15 @@ class ProfileForm extends React.Component {
   }
 
   render() {
-    var profile = this.props.profile || {};
+    var profile = this.state.profile;
 
     return (
       <form onSubmit={this.handleSubmit}>
 
         {this.props.register && (
           <div>
-            <FieldGroup id="email" label="Email *" type="email" required placeholder="Enter your email" onBlur={this.handleInputChange}></FieldGroup>
-            <FieldGroup id="password" label="Password *" type="password" required placeholder="Enter your password" onBlur={this.handleInputChange}></FieldGroup>
+            <FieldGroup id="email" label="Email *" type="email" required placeholder="Enter your email" onChange={this.handleInputChange}></FieldGroup>
+            <FieldGroup id="password" label="Password *" type="password" required placeholder="Enter your password" onChange={this.handleInputChange}></FieldGroup>
           </div>
         )}
 

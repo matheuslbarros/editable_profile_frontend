@@ -2,11 +2,11 @@ import React from 'react';
 import { FormGroup, ControlLabel, FormControl } from 'react-bootstrap';
 import { Typeahead } from 'react-bootstrap-typeahead';
 
-export const FieldGroup = ({ id, label, ...props }) => {
+export const FieldGroup = ({ id, label, value, ...props }) => {
   return (
     <FormGroup controlId={id}>
       <ControlLabel>{label}</ControlLabel>
-      <FormControl {...props} />
+      <FormControl value={value} {...props} />
     </FormGroup>
   );
 };
@@ -17,8 +17,8 @@ export const FieldGroupSelect = ({ id, label, options, placeholder, ...props }) 
       <ControlLabel>{label}</ControlLabel>
       <FormControl componentClass="select" {...props}>
         <option value=''>{placeholder || 'Select an option...'}</option>
-        {options.map((item) => {
-          return <option value={item.id}>{item.name}</option>;
+        {options.map((item, key) => {
+          return <option key={key} value={item.id}>{item.name}</option>;
         })}
       </FormControl>
     </FormGroup>
